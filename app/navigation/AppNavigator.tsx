@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, View } from 'react-native';
@@ -19,7 +18,7 @@ export default function AppNavigator() {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 items-center justify-center">
         <ActivityIndicator size="large" color="black" />
       </View>
     );
@@ -30,8 +29,7 @@ export default function AppNavigator() {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}
-      >
+        }}>
         {session && session.user ? (
           // Protected routes
           <Stack.Screen name="Home" component={HomeScreen} />
@@ -43,4 +41,4 @@ export default function AppNavigator() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-} 
+}
