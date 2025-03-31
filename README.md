@@ -117,10 +117,6 @@ model User {
 - [Prisma](https://www.prisma.io/) - Database ORM
 - [PostgreSQL](https://www.postgresql.org/) - Database
 
-## 📱 Screenshots
-
-[Add your app screenshots here]
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
