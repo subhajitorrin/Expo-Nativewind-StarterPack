@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } fro
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
-import { supabase } from 'lib/supabase';
+import { supabase } from '../../../lib/supabase';
+import { useAuth } from '../../context/AuthContext';
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -13,7 +14,7 @@ export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const navigation = useNavigation<LoginScreenNavigationProp>();
+  const { session } = useAuth();
 
   async function signInWithEmail() {
     if (!email || !password) {
@@ -22,17 +23,18 @@ export default function LoginScreen() {
     }
 
     setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-    if (error) {
+      if (error) throw error;
+    } catch (error: any) {
       Alert.alert('Error', error.message);
-    } else if (data.session) {
-      navigation.navigate('Home');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function signUpWithEmail() {

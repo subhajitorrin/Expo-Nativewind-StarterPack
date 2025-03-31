@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+import { supabase } from '../../lib/supabase';
 
 export default function HomeScreen() {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error signing out:', error.message);
+    }
+  };
 
   return (
     <View className="flex-1 bg-white">
@@ -19,7 +20,7 @@ export default function HomeScreen() {
         
         <TouchableOpacity
           className="bg-black rounded-lg py-4 px-8"
-          onPress={() => navigation.navigate('Login')}
+          onPress={handleLogout}
         >
           <Text className="text-white text-center font-semibold text-xl">
             Log Out

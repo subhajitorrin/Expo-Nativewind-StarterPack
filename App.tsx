@@ -1,6 +1,11 @@
 import './global.css';
 import AppNavigator from './app/navigation/AppNavigator';
+import { AuthProvider } from './app/context/AuthContext';
 
 export default function App() {
-  return <AppNavigator />;
+  return (
+    <AuthProvider>
+      <AppNavigator />
+    </AuthProvider>
+  );
 }
